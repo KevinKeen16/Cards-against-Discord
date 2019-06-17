@@ -6,9 +6,11 @@ using UnityEngine.UI;
 
 public class AvatarImage : MonoBehaviour
 {
+    public static bool Loaded;
     // Start is called before the first frame update
     async void Start()
     {
+        Loaded = false;
         var discord = DiscordGameSDK.Instance.discord;
         await DiscordGameSDK.Instance.SDKReady.Task;
         User user = discord.GetUserManager().GetCurrentUser();
@@ -24,6 +26,8 @@ public class AvatarImage : MonoBehaviour
             Texture avatar = discord.GetImageManager().GetTexture(handle);
             RawImage image = gameObject.GetComponent<RawImage>();
             image.texture = avatar;
+            Debug.Log("User Loaded");
+            Loaded = true;
         });
     }
 
